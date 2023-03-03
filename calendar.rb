@@ -10,10 +10,64 @@ def dates(from, to)
   days_of_month
 end
 
-dates = dates(Date.today.at_beginning_of_month, Date.today.prev_month.end_of_month.advance(months: 3))
+dates = dates(Date.today.at_beginning_of_month, Date.today.prev_month.end_of_month.advance(months: 2))
 
+def shoot_1
+  dates = ['2023-03-03']
+  {
+  'name' => "Mid- Atlantic Sectional",
+  'time' => "12:00",
+  'duration' => 4,
+  'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
+}
+end
+def shoot_2
+  dates = ['2023-03-03']
+  {
+  'name' => "Mid- Atlantic Sectional",
+  'time' => "18:00",
+  'duration' => 4,
+  'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
+}
+end
+def shoot_3
+  dates = ['2023-03-04']
+  {
+  'name' => "Mid- Atlantic Sectional",
+  'time' => "9:00",
+  'duration' => 8,
+  'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
+}
+end
+def shoot_4
+  dates = ['2023-03-05']
+  {
+  'name' => "Mid- Atlantic Sectional",
+  'time' => "9:00",
+  'duration' => 4,
+  'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
+}
+end
+# def shoot_5
+#   dates = ['2023-03-17']
+#   {
+#   'name' => "NJSFAA",
+#   'time' => "9:00",
+#   'duration' => 4,
+#   'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
+# }
+# end
+def shoot_5
+  dates = Recurrence.new(every: :day, starts: '2023-03-17', until: '2023-03-18')
+  {
+  'name' => "NJSFAA",
+  'time' => "9:00",
+  'duration' => 4,
+  'dates' => dates.map { |date| date.strftime('%B %d %A') }
+}
+end
 def member_meeting
-  dates = Recurrence.new(every: :month, on: :second,  weekday: :monday, repeat: 2)
+  dates = Recurrence.new(every: :month, on: :second, weekday: :monday, repeat: 2)
   {
   'name' => "Member Meeting",
   'time' => "19:00",
@@ -52,7 +106,7 @@ def traditional_league
   }
 end
 def home_schoolers
-  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-31')
+  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-31', except: ['2023-03-17'])
   {
   'name' => "Home Schoolers",
   #'weekday' => "Friday",
@@ -62,7 +116,7 @@ def home_schoolers
   }
 end
 def joe_natalie
-  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-31', except: ['2023-11-23'])
+  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-31', except: ['2023-03-03', '2023-11-23'])
   {
   'name' => "Joe N League",
   #'weekday' => "Friday",
@@ -82,7 +136,7 @@ def friday_nite
   }
 end
 def jersey_girls
-  dates = Recurrence.new(every: :week, on: :saturday, until: '2023-12-23', except: ['2023-11-23'])
+  dates = Recurrence.new(every: :week, on: :saturday, starts: '2023-09-16', until: '2023-12-23', except: ['2023-11-23'])
   {
   'name' => "Jersey Girls",
   #'weekday' => "Saturday",
@@ -112,31 +166,36 @@ end
 @events << friday_nite
 @events << jersey_girls
 @events << joad
+@events << shoot_1
+@events << shoot_2
+@events << shoot_3
+@events << shoot_4
+@events << shoot_5
 
-@times = [
-  "8:00",
-  "9:00",
-  "10:00",
-  "11:00",
-  "12:00",
-  "13:00",
-  "14:00",
-  "15:00",
-  "16:00",
-  "17:00",
-  "18:00",
-  "19:00",
-  "20:00",
-  "21:00",
-  "22:00"
-]
+@times = {
+  "8:00" => "8 am",
+  "9:00" => "9 am",
+  "10:00" => "10 am",
+  "11:00" => "11 am",
+  "12:00" => "12 pm",
+  "13:00" => "1 pm",
+  "14:00" => "2 pm",
+  "15:00" => "3 pm",
+  "16:00" => "4 pm",
+  "17:00" => "5 pm",
+  "18:00" => "6 pm",
+  "19:00" => "7 pm",
+  "20:00" => "8 pm",
+  "21:00" => "9 pm",
+  "22:00" => "10 pm"
+}
 
 def slots_before_event(number)
   "," * number if number > 0
 end
 
 def index_of_event_time(time)
-  @times.find_index(time)
+  @times.keys.find_index(time)
 end
 
 def event_duration(name, duration)
@@ -163,9 +222,8 @@ end
 end
 
 def events_that_day(date)
-  #get_events(date)
   events_that_day = []
-  ordered_events = get_events(date).sort_by { |event| event.index(event['time']) }
+  ordered_events = get_events(date).sort_by { |event| @times.keys.index(event['time']) }
   events_that_day << ordered_events.map { |event| event}
   events_that_day.flatten!
 end
@@ -195,7 +253,7 @@ end
 
  CSV.open("calendar.csv", "w",
    :write_headers=> true,
-   :headers => [""] + @times) do |row|
+   :headers => [""] + @times.values) do |row|
   dates.each do |date|
     #puts events_on_date_line(date).join('').split(',') unless events_on_date_line(date).nil?
 #     #join all strings, then split on comma to make into discrete CSV fields
