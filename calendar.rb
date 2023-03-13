@@ -48,15 +48,6 @@ def shoot_4
   'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
 }
 end
-# def shoot_5
-#   dates = ['2023-03-17']
-#   {
-#   'name' => "NJSFAA",
-#   'time' => "9:00",
-#   'duration' => 4,
-#   'dates' => dates.map { |date| Date.parse(date).strftime('%B %d %A') }
-# }
-# end
 def shoot_5
   dates = Recurrence.new(every: :day, starts: '2023-03-17', until: '2023-03-18')
   {
@@ -66,8 +57,17 @@ def shoot_5
   'dates' => dates.map { |date| date.strftime('%B %d %A') }
 }
 end
+def shoot_6
+  dates = Recurrence.new(every: :day, starts: '2023-03-19', until: '2023-03-19')
+  {
+  'name' => "NJSFAA",
+  'time' => "9:00",
+  'duration' => 3,
+  'dates' => dates.map { |date| date.strftime('%B %d %A') }
+}
+end
 def member_meeting
-  dates = Recurrence.new(every: :month, on: :second, weekday: :monday, repeat: 2)
+  dates = Recurrence.new(every: :month, on: :second, weekday: :monday, repeat: 2, starts: Date.today.at_beginning_of_month)
   {
   'name' => "Member Meeting",
   'time' => "19:00",
@@ -76,7 +76,7 @@ def member_meeting
 }
 end
 def tuesday_league
-  dates = Recurrence.new(every: :week, on: :tuesday, until: '2023-12-31')
+  dates = Recurrence.new(every: :week, on: :tuesday, starts: Date.today.at_beginning_of_month, until: '2023-12-31')
   {
   'name' => "Tuesday League",
   #'weekday' => "Friday",
@@ -86,7 +86,7 @@ def tuesday_league
   }
 end
 def wounded_warriors
-  dates = Recurrence.new(every: :week, on: :wednesday, until: '2023-12-31')
+  dates = Recurrence.new(every: :week, on: :wednesday, starts: Date.today.at_beginning_of_month, until: '2023-12-31')
   {
   'name' => "Wounded Warriors",
   #'weekday' => "Friday",
@@ -96,7 +96,7 @@ def wounded_warriors
   }
 end
 def traditional_league
-  dates = Recurrence.new(every: :week, on: :wednesday, until: '2023-12-31')
+  dates = Recurrence.new(every: :week, on: :wednesday, starts: Date.today.at_beginning_of_month, until: '2023-12-31')
   {
   'name' => "Traditional League",
   #'weekday' => "Friday",
@@ -106,7 +106,7 @@ def traditional_league
   }
 end
 def home_schoolers
-  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-31', except: ['2023-03-17'])
+  dates = Recurrence.new(every: :week, on: :friday, starts: Date.today.at_beginning_of_month, until: '2023-12-31', except: ['2023-03-17'])
   {
   'name' => "Home Schoolers",
   #'weekday' => "Friday",
@@ -116,7 +116,7 @@ def home_schoolers
   }
 end
 def joe_natalie
-  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-31', except: ['2023-03-03', '2023-11-23'])
+  dates = Recurrence.new(every: :week, on: :friday, starts: Date.today.at_beginning_of_month, until: '2023-12-31', except: ['2023-03-03', '2023-11-23'])
   {
   'name' => "Joe N League",
   #'weekday' => "Friday",
@@ -126,7 +126,7 @@ def joe_natalie
   }
 end
 def friday_nite
-  dates = Recurrence.new(every: :week, on: :friday, until: '2023-12-15', except: ['2023-03-03', '2023-03-17', '2023-08-11', '2023-12-22', '2023-12-26'])
+  dates = Recurrence.new(every: :week, on: :friday, starts: Date.today.at_beginning_of_month, until: '2023-12-15', except: ['2023-03-03', '2023-03-17', '2023-08-11', '2023-12-22', '2023-12-26'])
   {
   'name' => "Friday Nite Shoot",
   #'weekday' => "Friday",
@@ -145,8 +145,18 @@ def jersey_girls
   'dates' => dates.map { |date| date.strftime('%B %d %A') }
   }
 end
+def navigators
+  dates = Recurrence.new(every: :week, on: :saturday, starts: '2023-01-31', until: '2023-09-01', except: ['2023-03-04', '2023-11-23'])
+  {
+  'name' => "Navigators",
+  #'weekday' => "Saturday",
+  'time' => "12:00",
+  'duration' => 3,
+  'dates' => dates.map { |date| date.strftime('%B %d %A') }
+  }
+end
 def joad
-  dates = Recurrence.new(every: :week, on: :saturday, until: '2023-12-23', except: ['2023-02-11', '2023-03-04'])
+  dates = Recurrence.new(every: :week, on: :saturday, starts: '2023-01-21', until: '2023-12-23', except: ['2023-02-11', '2023-03-04', '2023-03-18'])
   {
   'name' => "JOAD",
   #'weekday' => "Saturday",
@@ -165,12 +175,14 @@ end
 @events << joe_natalie
 @events << friday_nite
 @events << jersey_girls
+@events << navigators
 @events << joad
 @events << shoot_1
 @events << shoot_2
 @events << shoot_3
 @events << shoot_4
 @events << shoot_5
+@events << shoot_6
 
 @times = {
   "8:00" => "8 am",
