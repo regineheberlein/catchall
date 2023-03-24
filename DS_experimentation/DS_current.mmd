@@ -1,0 +1,83 @@
+graph LR;
+
+Q1[Manuscript]
+Q2[Holding]
+Q3[DS 2.0 Record]
+Q4[Current]
+Q5[Non-Current]
+Q6[Standard Title]
+Q7[Actor: Name Authority]
+Q8[Personal: Name Authority]
+Q9[Corporate: Name Authority]
+Q10[Role: Authority File]
+Q11[Term: Authority File]
+Q12[Language: Authority File]
+Q13[Century: Authority File]
+Q14[Datable]
+Q15[Non-Datable]
+Q16[Place: Authority File]
+Q17[Material: Authority File]
+
+i[/Individual MS/]
+h[/Individual Holding/]
+r[/Individual Source Record/]
+
+P1{{has holding institution as recorded}}
+P1-.has holding institution in authority file.->Q9
+P2{{has title as recorded}}
+P2-.has standard title.->Q6
+P2-.in original script.->string16
+P3{{has associated name as recorded}}
+P3-.has name in authority file.->Q8
+P3-.has role in authority file.->Q10
+P4{{has genre as recorded}}
+P4-.has term in authority file.->Q11
+P5{{has language as recorded}}
+P5-.has language in authority file.->Q12
+P6{{has subject as recorded}}
+P6-.has term in authority file.->Q11
+P7{{has production place as recorded}}
+P7-.has place in authority file.->Q16
+P8{{has production date as recorded}}
+P8-.is century.->string11
+P8-.has production century in authority file.->Q13 
+P8-.is earliest date.->date2
+P8-.is latest date.->date3
+P9{{has material as recorded}}
+P9-.has material in authority file.->Q17 
+
+i--instance of-->Q1
+h--instance of-->Q2
+r--instance of-->Q3
+
+Q1--has DS ID-->string1
+Q1--has holding-->Q2
+Q2--has start time-->date1
+Q2--has end time-->date6
+Q2-->P1-->string2
+Q2--has holding status-->Q4
+Q2--has holding status-->Q5
+Q2--has institutional ID-->string3
+Q2--has shelfmark-->string4
+Q2--has link to institutional record-->uri1
+Q3-->P2-->string5
+Q3--has uniform title as recorded-->string15
+Q3-->P3-->string6
+Q3-->P4-->string7
+Q3-->P5-->string8
+Q3-->P6-->string9
+Q3-->P7-->string14
+Q3-->P8-->string10
+Q3--has physical description-->string12
+Q3--has described manuscript-->Q1
+Q3-->P9-->string17
+Q3--has note-->string13
+Q3--was added on date-->date4 
+Q3--was updated on date-->date5
+Q3--is dated-->Q14 
+Q3--is dated-->Q15
+Q3--has IIIF manifest-->uri2
+Q3--has acknowledgments-->string18
+
+Q7--has subclass-->Q8 
+Q7--has subclass-->Q9
