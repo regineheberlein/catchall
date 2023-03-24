@@ -1,0 +1,148 @@
+graph LR;
+
+%%classes
+Q1[[Manuscript]]
+Q2[[Place]]
+Q3[[Language]]
+Q4[[Material]]
+Q5[[Genre]]
+Q6[[Subject]]
+Q7[[Century]]
+Q8[[Person]]
+Q9[[Corporate Body]]
+Q10[[Family]]
+
+%%properties
+P3{{has string value}}
+P4{{is authorized at}}
+P5{{has author}}
+P6{{has title}}
+P7{{has standard title}}
+P8{{has uniform title}}
+P9{{has physical description}}
+P10{{has note}}
+P11{{has acknowledgments}}
+P12{{title in original script}}
+P13{{described at}}
+P14{{DS identifier}}
+P15{{datable}}
+%%maps to current and former owners, distinguished by qualifiers
+%%this makes "current" unnecessary
+P16{{has owner}}
+P17{{has IIIF manifest}}
+P18{{has scribe}}
+P19{{has rubricator}}
+P20{{has illuminator}}
+P22{{has place of production}}
+P23{{has language}}
+P24{{has material}}
+P25{{has genre}}
+P26{{has subject}}
+P27{{has production date}}
+P28{{has production century}}
+
+%%qualifiers (may be overkill)
+%%toggle comments to render graphic with and without
+%%NB P13, P14 asserted by DS, i.e. recorded by wikibase, hence the assertion qualifier is redundant
+P3-.asserted by.->Q9
+P6-.asserted by.->Q9
+P7-.asserted by.->Q9
+P8-.asserted by.->Q9
+P9-.asserted by.->Q9
+P10-.asserted by.->Q9
+P11-.asserted by.->Q9
+P12-.asserted by.->Q9
+
+P15-.asserted by.->Q9
+P15-.evidence.->string10[string]
+
+P16-.asserted by.->Q9
+P16-.start date.->date1[date]
+P16-.end date.->date2[date]
+P16-.shelfmark.-string11[string]
+
+P27-.asserted by.->Q9
+P27-.earliest date.->date3[date]
+P27-.latest date.->date4[date]
+P27-.evidence.->string12[string]
+
+%%domains
+Q1-->P16
+Q1-->P5
+Q1-->P18
+Q1-->P19
+Q1-->P20
+Q1-->P6
+Q1-->P7
+Q1-->P8
+Q1-->P9
+Q1-->P10
+Q1-->P11
+Q1-->P12
+Q1-->P13
+Q1-->P14
+Q1-->P15
+Q1-->P17
+Q1-->P22
+Q1-->P23
+Q1-->P24
+Q1-->P25
+Q1-->P26
+Q1-->P27
+Q1-->P28
+
+Q2-->P3
+Q2-->P4
+
+Q8-->P3 
+Q8-->P4
+
+Q9-->P3
+Q9-->P4
+
+Q10-->P3
+Q10-->P4
+
+Q3-->P3
+Q3-->P4
+
+Q4-->P3
+Q4-->P4
+
+Q5-->P3
+Q5-->P4
+
+Q6-->P3
+Q6-->P4
+
+Q7-->P3
+Q7-->P4
+
+%%ranges
+P3-->string1[string]
+P4-->uri1[uri]
+P5-->Q8
+P6-->string2[string]
+P7-->string3[string]
+P8-->string4[string]
+P9-->string5[string]
+P10-->string6[string]
+P11-->string7[string]
+P12-->string8[string]
+P13-->uri2[uri]
+P14-->string9[string]
+P15-->boolean1[boolean]
+P16-->Q9
+P16-->Q10
+P16-->Q8
+P17-->uri3[uri]
+P18-->Q8 
+P19-->Q8
+P20-->Q8
+P22-->Q2
+P23-->Q3
+P24-->Q4
+P25-->Q5
+P26-->Q6
+P27-->string13[string]
+P28-->Q7
