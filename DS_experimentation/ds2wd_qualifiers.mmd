@@ -1,0 +1,55 @@
+graph TD;
+
+%%https://catalog.digital-scriptorium.org/wiki/Special:EntityData/Q631
+
+%%Q3
+RDF_Entity8[[rdf:Description Q3]]
+rdf_type_item{{rdf:about wiki.base Item}}
+RDF_Entity8--rdf:type-->rdf_type_item
+RDF_Entity8--schema:name-->string3{{DS 2.0 Record}}
+
+%%Q631
+RDF_Entity1[[rdf:Description Q631]]
+rdf_type_item{{rdf:about wiki.base Item}}
+RDF_Entity1--rdf:type-->rdf_type_item
+RDF_Entity1--schema:name-->string1{{Buch_von_den_probierten_Kunsten_DS150}}
+RDF_Entity1--instanceOf-->RDF_Entity8
+RDF_Entity1-->RDF_Entity2
+RDF_Entity1-->RDF_Entity3
+
+%%Q464
+RDF_Entity7[[rdf:Description Q464]]
+rdf_type_item{{rdf:about wiki.base Item}}
+RDF_Entity7--rdf:type-->rdf_type_item
+RDF_Entity7-->pq_Entity6
+RDF_Entity7--schema:name-->Helm,_Franz
+
+%%P10
+RDF_Entity2[[rdf:Description P10]]
+rdf_type_property{{rdf:about wiki.base Property}}
+RDF_Entity2--schema:name-->title_as_recorded
+RDF_Entity2-->string{{Buch_von_den_probierten_Kunsten}}
+RDF_Entity2--rdf:type-->rdf_type_property
+
+%%P14
+RDF_Entity3[[rdf:Description P14]]
+rdf_type_property{{rdf:about wiki.base Property}}
+RDF_Entity3--rdf:type-->rdf_type_property
+RDF_Entity3--schema:name-->associated_name_as_recorded
+RDF_Entity3-->ps_Entity5
+RDF_Entity3-->string2{{Helm,_Franz,_approximately_1500-1567}}
+string2-->ps_Entity5
+
+%%P17
+RDF_Entity4[[rdf:Description P17]]
+rdf_type_property{{rdf:about wiki.base Property}}
+RDF_Entity4--rdf:type-->rdf_type_property
+RDF_Entity4--schema:name-->name_in_authority_file
+RDF_Entity4-->pq_Entity6
+RDF_Entity4-->RDF_Entity7
+
+%%entified claims
+ps_Entity5([ps:P14 Helm,_Franz,_approximately_1500-1567])
+ps_Entity5-->RDF_Entity4
+
+pq_Entity6([pq:P17 Q464])
